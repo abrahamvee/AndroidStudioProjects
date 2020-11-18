@@ -23,7 +23,6 @@ import androidx.loader.content.Loader;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -54,7 +53,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         //Create a new adapter that takes an empty list of earthquakes as input
         mAdapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
         //Get a reference to the loader
-        android.app.LoaderManager loaderManager = getLoaderManager();
+        LoaderManager loaderManager = getSupportLoaderManager();
 
         //Set the adapter on the {@link ListView}
         //so the list can be populated in the usere interface
@@ -69,13 +68,13 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url2open));
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
-                }else{
+                } else {
                     Log.d("ImplicitIntents", "Can't handle this intent!");
                 }
             }
         });
 
-        loaderManager.initLoader(EARTHQUAKE_LOADER_ID,null, (android.app.LoaderManager.LoaderCallbacks<Object>) this);
+        LoaderManager.getInstance(this).initLoader(EARTHQUAKE_LOADER_ID, null, this);
     }
 
     @NonNull
